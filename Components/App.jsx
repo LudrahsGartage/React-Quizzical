@@ -4,9 +4,7 @@ import Playing from "./Playing"
 import shuffle from "../Utils/Shuffle"
 
 export default function App () {
-    //set state for user journey (Home, Playing, Answered)
-    //set state for current user responses
-    //set state for current question and ansers
+
     const [screen, setScreen] = React.useState("Home")
     const [questions, setQuestions] = React.useState([])
     const [playerAnswers, setPlayerAnswers] = React.useState([])
@@ -16,6 +14,7 @@ export default function App () {
             .then(res=> res.json())
             .then(data => {
                 setQuestionList(data.results)
+                setPLayerResponseArray(data.results)
                 setScreen("Playing")
             })
     }
@@ -32,10 +31,26 @@ export default function App () {
         setQuestions(questionsList)
     }
     
+    function setPLayerResponseArray (array) {
+        const responseList = array.map(item => {
+            return ({
+                question: item.question,
+                playerAnswer: ""
+            })
+        })
+        setPlayerAnswers(responseList)
+    }
+
+    function handlePlayerAnswer (e) {
+
+    }
+
+    console.log(screen)
+
     return (
         <div className="container" style={screen === "Home" ? {alignItems:"center"} : {alignItems:"start"}}>
             {screen ==="Home" && (<Home handleClick={startQuiz} />)}
-            {screen ==="Playing" && (<Playing questions={questions} />)}
+            {screen ==="Playing" && (<Playing questions={questions} screen={screen} playerAnswers={playerAnswers} />)}
         </div>
     )
 }

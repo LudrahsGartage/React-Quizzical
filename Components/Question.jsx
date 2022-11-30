@@ -2,7 +2,7 @@ import React from "react"
 import Option from "./Option"
 
 export default function Question (props) {
-    const options = props.data.optionList.map((option,i) => <Option answer={option} key={i}/>)
+    const options = props.data.optionList.map((option,i) => <Option answer={option} key={i} playerResponse={props.playerResponse} screen={props.screen}/>)
     
     return (
         <div className="question-container">
