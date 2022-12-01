@@ -14,11 +14,21 @@ export default function Playing (props) {
             handleSelectAnswer={props.handleSelectAnswer}/>)
     }
 
+    function getScore () {
+        let score = 0
+        for(let i=0; i < props.playerAnswers.length; i++) {
+            if (props.questions[i].correctAnswer == props.playerAnswers[i].playerAnswer) {
+                score += 1
+            }
+        }
+        return (`${score}/${props.playerAnswers.length}`)
+    }
+
     const endScreenButton = <button onClick={props.handleChangeScreen} className="change-screen-btn">Check Answers</button>
     const newGameDiv = (
         <div className="score-div">
-            <span>You Scored 3/5 correct answers</span>
-            <button className="change-screen-btn">Play Again</button>
+            <span>You Scored {getScore()} correct answers</span>
+            <button onClick={props.handleChangeScreen} className="change-screen-btn">Play Again</button>
         </div>
     )
 

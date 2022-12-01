@@ -65,8 +65,6 @@ export default function App () {
         }
     }
 
-    console.log(screen)
-
     return (
         <div className="container" style={screen === "Home" ? {alignItems:"center"} : {alignItems:"start"}}>
             {screen ==="Home" && (<Home handleClick={startQuiz} />)}
