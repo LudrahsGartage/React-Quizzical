@@ -18,9 +18,13 @@ export default function Option (props) {
         return style
     }
 
+    const callHandleClick = (e) => {
+        props.handleSelectAnswer(props.question, props.answer)
+    }
+
     const classlist = `options ${determineClass()}`
 
     return (
-        <button className={classlist} >{props.answer}</button>
+        <button onClick={callHandleClick} className={classlist} >{props.answer}</button>
     )
 }
