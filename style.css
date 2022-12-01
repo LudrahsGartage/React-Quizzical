@@ -17,6 +17,8 @@ body, #root {
     min-height: 100%;
 }
 
+/* Title Screen */
+
 h1.title, .questions {
     font-family: 'Karla', sans-serif;
 }
@@ -26,12 +28,6 @@ h1.title {
     color: #293264;
     font-size: 2rem;
     margin: 0.25em;
-}
-
-.questions {
-    font-size: 1rem;
-    color: #293264;
-    max-width: 600px;
 }
 
 p.description {
@@ -54,11 +50,21 @@ p.description {
     transform: scale(1.1)
 }
 
+/* Questions */
+
+.questions {
+    font-size: 1rem;
+    color: #293264;
+    max-width: 600px;
+}
+
 .question-container{
     width: 100%;
     padding-bottom: 1em;
     border-bottom: 1px solid #293264 
 }
+
+/* Options */
 
 .options {
     border: 1px solid #4D5B9E;
@@ -100,6 +106,8 @@ p.description {
     border-color: #4D5B9E;
     cursor: not-allowed;
 }
+
+/* Change Screen Div */
 
 .change-screen-btn{
     align-self: center;
