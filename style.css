@@ -8,12 +8,13 @@ body, #root {
 }
 
 .container {
-    box-sizing: content-box;
+    box-sizing: border-box;
     max-width: 1000px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     padding: 2em 2em;
+    min-height: 100%;
 }
 
 h1.title, .questions {
