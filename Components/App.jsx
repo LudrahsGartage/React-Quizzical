@@ -2,6 +2,8 @@ import React from "react"
 import Home from "./Home"
 import Playing from "./Playing"
 import shuffle from "../Utils/Shuffle"
+import { decode } from 'html-entities'
+
 
 export default function App () {
 
@@ -22,7 +24,7 @@ export default function App () {
     function setQuestionList (array) {
         const questionsList = array.map(item => {
             return ({
-                question: item.question,
+                question: decode(item.question),
                 correctAnswer: item.correct_answer,
                 optionList: [...item.incorrect_answers,item.correct_answer]
             })
@@ -34,15 +36,23 @@ export default function App () {
     function setPLayerResponseArray (array) {
         const responseList = array.map(item => {
             return ({
-                question: item.question,
+                question: decode(item.question),
                 playerAnswer: ""
             })
         })
         setPlayerAnswers(responseList)
     }
 
-    function handlePlayerAnswer (e) {
-
+    function handleSelectAnswer (question, answer) {
+        const newPlayerAnswers = []
+        playerAnswers.forEach(item => {
+            if (item.question==question) {
+                newPlayerAnswers.push({question: item.question, playerAnswer: answer})
+            } else {
+                newPlayerAnswers.push(item)
+            }
+        })
+        setPlayerAnswers(newPlayerAnswers)
     }
 
     console.log(screen)
@@ -50,7 +60,7 @@ export default function App () {
     return (
         <div className="container" style={screen === "Home" ? {alignItems:"center"} : {alignItems:"start"}}>
             {screen ==="Home" && (<Home handleClick={startQuiz} />)}
-            {screen ==="Playing" && (<Playing questions={questions} screen={screen} playerAnswers={playerAnswers} />)}
+            {screen ==="Playing" && (<Playing questions={questions} screen={screen} playerAnswers={playerAnswers} handleSelectAnswer={handleSelectAnswer} />)}
         </div>
     )
 }
