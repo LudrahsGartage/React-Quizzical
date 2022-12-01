@@ -14,9 +14,18 @@ export default function Playing (props) {
             handleSelectAnswer={props.handleSelectAnswer}/>)
     }
 
+    const endScreenButton = <button onClick={props.handleChangeScreen} className="change-screen-btn">Check Answers</button>
+    const newGameDiv = (
+        <div className="score-div">
+            <span>You Scored 3/5 correct answers</span>
+            <button className="change-screen-btn">Play Again</button>
+        </div>
+    )
+
     return (
         <>
             {html}
+            {props.screen=="Playing"?endScreenButton:newGameDiv}
         </>
     )
 }

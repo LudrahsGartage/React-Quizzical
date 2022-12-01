@@ -4,22 +4,30 @@ export default function Option (props) {
     
     function determineClass () {
         let style = "options "
-        if (props.screen === "Playing"){
-            if (props.playerResponse.answer === props.answer) {
+        if (props.screen == "Playing"){
+            if (props.playerResponse.playerAnswer == props.answer) {
                 style = "selected"
             } 
-        } else if (props.screen === "Submitted") {
-            if (props.playerResponse.answer === props.answer && props.playerResponse.answer === props.correctAnswer) {
+        } else if (props.screen == "End") {
+            if (props.playerResponse.playerAnswer== props.answer && props.playerResponse.playerAnswer == props.correctAnswer) {
                 style = "correct-answer"
-            } else if (props.playerResponse.answer === props.answer && props.playerResponse.answer !== props.correctAnswer) {
+            } else if (props.playerResponse.playerAnswer == props.answer && props.playerResponse.playerAnswer !== props.correctAnswer) {
                 style = "incorrect-answer"
+            } else {
+                style= "disabled-answer"
             }
         }
         return style
     }
 
     const callHandleClick = (e) => {
-        props.handleSelectAnswer(props.question, props.answer)
+        if (props.screen == "Playing") {
+            if (props.answer !== props.playerResponse.playerAnswer){
+                props.handleSelectAnswer(props.question, props.answer)
+            } else {
+                props.handleSelectAnswer(props.question, "")
+            }
+        }
     }
 
     const classlist = `options ${determineClass()}`

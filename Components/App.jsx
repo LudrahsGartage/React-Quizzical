@@ -12,7 +12,7 @@ export default function App () {
     const [playerAnswers, setPlayerAnswers] = React.useState([])
     
     function startQuiz () {
-        fetch("https://opentdb.com/api.php?amount=5&category=14&difficulty=easy&type=multiple")
+        fetch("https://opentdb.com/api.php?amount=10&category=14&difficulty=easy&type=multiple")
             .then(res=> res.json())
             .then(data => {
                 setQuestionList(data.results)
@@ -23,10 +23,12 @@ export default function App () {
     
     function setQuestionList (array) {
         const questionsList = array.map(item => {
+            const optionsList = [...item.incorrect_answers,item.correct_answer]
+            const cleanOptionsList = optionsList.map(item => decode(item))
             return ({
                 question: decode(item.question),
-                correctAnswer: item.correct_answer,
-                optionList: [...item.incorrect_answers,item.correct_answer]
+                correctAnswer: decode(item.correct_answer),
+                optionList: cleanOptionsList
             })
         })
         questionsList.forEach(question => shuffle(question.optionList))
@@ -55,12 +57,27 @@ export default function App () {
         setPlayerAnswers(newPlayerAnswers)
     }
 
+    function handleChangeScreen () {
+        if (screen === "Playing") {
+            setScreen("End")
+        } else if (screen === "End") {
+            startQuiz()
+        }
+    }
+
     console.log(screen)
 
     return (
         <div className="container" style={screen === "Home" ? {alignItems:"center"} : {alignItems:"start"}}>
             {screen ==="Home" && (<Home handleClick={startQuiz} />)}
-            {screen ==="Playing" && (<Playing questions={questions} screen={screen} playerAnswers={playerAnswers} handleSelectAnswer={handleSelectAnswer} />)}
+            {screen !=="Home" && (
+            <Playing 
+                questions={questions} 
+                screen={screen} 
+                playerAnswers={playerAnswers} 
+                handleSelectAnswer={handleSelectAnswer} 
+                handleChangeScreen = {handleChangeScreen}
+                />)}
         </div>
     )
 }
